@@ -12,9 +12,87 @@
             <div class="navbar-logo">
                 <img src="img/logo.png" alt="StudentOverflow" class="image" style="width:200px; height:40px;">
             </div>
-            <button class="btn" style="margin-right:20px;">Exit</button>
+        <a href="Index.html" class="btn">Exit</a>
         </nav>
+
     </div>
+    </div>
+    <div>
+  <div class="container-questions">
+  <br>
+  <h2>Welcome Back to StudentOverFlow</h2>
+  <br>
+    <h2>Ask a Question</h2>
+    <br>
+    <form id="questionForm">
+      <label>Your name:</label>  
+    <input type="text" id="username" placeholder="Your name" required>    
+      <label>Your question:</label>
+      <textarea id="questionText" placeholder="Type your question..." required></textarea>
+      
+      <label for="Materia">Subject:</label>
+      <input type="text" id="Materia" placeholder="Input the Subject" required>
+
+    <label for="Materia">Four-month period:</label>
+      <input type="text" id="Materia" placeholder="Input the four-month period" required>
+      
+      <button type="submit">POST QUESTION</button>
+    </form>
+
+    <br>
+    </div>
+    <div class="container-questions">
+    <h2>Questions of the community</h2>
+    <div id="questionsList">
+    </div>
+  </div>
+    </div>
+
+  <script>
+const form = document.getElementById("questionForm");
+const questionsList = document.getElementById("questionsList");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value;
+  const questionText = document.getElementById("questionText").value;
+
+  // Contenedor de la pregunta
+  const questionDiv = document.createElement("div");
+  questionDiv.classList.add("question");
+  questionDiv.innerHTML = `<strong>${username} asks:</strong><p>${questionText}</p>`;
+
+  // Formulario de comentario
+  const commentForm = document.createElement("form");
+  commentForm.innerHTML = `
+    <input type="text" placeholder="Your name" required>
+    <input type="text" placeholder="Add a comment..." required>
+    <button type="submit">Comment</button>
+  `;
+
+  // Lista de comentarios
+  const commentsDiv = document.createElement("div");
+
+  commentForm.addEventListener("submit", function(ev) {
+    ev.preventDefault();
+    const inputs = commentForm.querySelectorAll("input");
+    const commentUser = inputs[0].value;
+    const commentText = inputs[1].value;
+    const comment = document.createElement("div");
+    comment.innerHTML = `<strong>${commentUser}:</strong> ${commentText}`;
+    commentsDiv.appendChild(comment);
+    commentForm.reset();
+  });
+
+  questionDiv.appendChild(commentForm);
+  questionDiv.appendChild(commentsDiv);
+
+  questionsList.prepend(questionDiv);
+
+  form.reset();
+});
+  </script>
     </div>
 </body>
 </html>

@@ -73,6 +73,7 @@ form.sign-in-form {
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
+  border: 2px solid #f0f0f0;
   display: grid;
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
@@ -145,6 +146,11 @@ form.sign-in-form {
   margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
 }
 
 .btn:hover {
@@ -183,7 +189,7 @@ form.sign-in-form {
 .panel {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center; 
   justify-content: space-around;
   text-align: center;
   z-index: 6;
@@ -203,6 +209,9 @@ form.sign-in-form {
   color: #fff;
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .panel h3 {
@@ -220,10 +229,16 @@ form.sign-in-form {
   margin: 0;
   background: none;
   border: 2px solid #fff;
-  width: 130px;
-  height: 41px;
+  width: 150px; /* igual que .btn */
+  height: 49px; /* igual que .btn */
   font-weight: 600;
   font-size: 0.8rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
 }
 
 .right-panel .image,
@@ -280,8 +295,6 @@ form.sign-in-form {
   justify-content: space-between;
   padding: 0 30px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  position: relative;
-  z-index: 10;
 }
 
 .navbar-logo {
@@ -292,12 +305,6 @@ form.sign-in-form {
 .navbar .btn {
   background-color: #fff;
   color: #000;
-  border: 2px solid #000;
-  width: 130px;
-  height: 41px;
-  font-size: 1rem;
-  margin: 0;
-  transition: 0.3s;
 }
 
 .navbar .btn:hover {
@@ -432,4 +439,53 @@ form.sign-in-form {
     bottom: 28%;
     left: 50%;
   }
+}
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+    }
+
+    h2 {
+      text-align: center;
+      color: #000000;
+    }
+
+    .container-questions {
+      max-width: 80%;
+      margin: auto;
+      margin-top: 100px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    }
+    input, textarea, button {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: 2px solid #000000;
+      font-size: 14px;
+    }
+    button {
+      background: #000000;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #666666;
+    }
+    .question {
+      background: #000000;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      color: white;
+      width: 100%;
+    }
+
+a {
+  text-decoration: none;
 }
