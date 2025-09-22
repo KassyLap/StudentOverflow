@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Quita FontAwesome y agrega Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="static/style.css" />
     <title>StudentOverFlow - Login</title>
   </head>
   <body>
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="#" class="sign-in-form">
+          <form action="/signin" method="POST" class="sign-in-form">
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="bi bi-person"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" name="username" placeholder="Username" />
             </div>
             <div class="input-field">
               <i class="bi bi-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" name="password" placeholder="Password" />
             </div>
             <input type="submit" value="Login" class="btn solid" />
             <p class="social-text">Or Sign in with social platforms</p>
@@ -39,30 +39,31 @@
               </a>
             </div>
           </form>
-          <form action="#" class="sign-up-form">
+        <form action="/signup" method="POST" class="sign-up-form">
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="bi bi-person"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" name="username" placeholder="Username" />
             </div>
             <div class="input-field">
               <i class="bi bi-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="email" placeholder="Email" />
             </div>
             <div class="input-field">
               <i class="bi bi-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" name="password" placeholder="Password" />
             </div>
             <div>
-              <input type="checkbox" placeholder="Admin"/>
+              <input type="checkbox" name="role_admin" id="role_admin" placeholder="Admin"/>
                 <i class="bi bi-lock">I'm an Admin</i>
             </div>
             <div>
-            <input type="checkbox" placeholder="Student" />
+            <input type="checkbox" name="role_student" id="role_student" placeholder="Student" />
                 <i class="bi bi-lock">I'm a Student</i>
             </div>
 
             <input type="submit" class="btn" value="Sign up" />
+
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
@@ -86,7 +87,7 @@
         <div class="panel left-panel">
           <div class="content">
             <div>
-                <img src="img/logo.png" class="image" alt="" />
+                <img src="static/img/logo.png" class="image" alt="" />
             </div>
             <h1>StudentOverFlow</h1>
             <br>
@@ -116,6 +117,6 @@
       </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script src="/static/js/app.js"></script>
   </body>
 </html>

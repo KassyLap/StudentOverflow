@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentOverFlow - Home</title>
+    <link rel="stylesheet" href="static/style.css" />
+</head>
+<body>
+    <div>
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <img src="static/img/logo.png" alt="StudentOverflow" class="image" style="width:200px; height:40px;">
+            </div>
+        <a href="/index" class="btn">Exit</a>
+        </nav>
+
+    </div>
+    </div>
+    <div>
+  <div class="container-questions">
+  <br>
+  <h2>Welcome Back to StudentOverFlow</h2>
+  <br>
+    <h2>Ask a Question</h2>
+    <br>
+    <form action="/ask" method="POST">
+      <label>Your name: <strong>{{ username }}</strong>!</label>  
+      <br>
+      <label>Your question:</label>
+      <textarea name="question" placeholder="Type your question..." required></textarea>
+      <label for="subject">Subject:</label>
+      <input type="text" name="subject" placeholder="Input the Subject" required>
+      <label for="period">Four-month period:</label>
+      <input type="text" name="period" placeholder="Input the four-month period" required>
+      
+      <button type="submit">POST QUESTION</button>
+    </form>
+
+    <br>
+    </div>
+    <div class="container-questions">
+    <h2>Questions of the community</h2>
+    <div id="questionsList">
+      {% for q in questions %}
+      <div class="question">
+        <strong>{{ q.author }} asks:</strong>
+        <p>{{ q.question }}</p>
+        <p><em>Subject:</em> {{ q.subject }} | <em>Period:</em> {{ q.period }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+    </div>
+      <script>
+const form = document.getElementById("questionForm");
+const questionsList = document.getElementById("questionsList");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value;
+  const questionText = document.getElementById("questionText").value;
+
+  // Contenedor de la pregunta
+  const questionDiv = document.createElement("div");
+  questionDiv.classList.add("question");
+  questionDiv.innerHTML = `<strong>${username} asks:</strong><p>${questionText}</p>`;
+
+  // Formulario de comentario
+  const commentForm = document.createElement("form");
+  commentForm.innerHTML = `
+    <input type="text" placeholder="Your name" required>
+    <input type="text" placeholder="Add a comment..." required>
+    <button type="submit">Comment</button>
+  `;
+
+  // Lista de comentarios
+  const commentsDiv = document.createElement("div");
+
+  commentForm.addEventListener("submit", function(ev) {
+    ev.preventDefault();
+    const inputs = commentForm.querySelectorAll("input");
+    const commentUser = inputs[0].value;
+    const commentText = inputs[1].value;
+    const comment = document.createElement("div");
+    comment.innerHTML = `<strong>${commentUser}:</strong> ${commentText}`;
+    commentsDiv.appendChild(comment);
+    commentForm.reset();
+  });
+
+  questionDiv.appendChild(commentForm);
+  questionDiv.appendChild(commentsDiv);
+
+  questionsList.prepend(questionDiv);
+
+  form.reset();
+});
+  </script>
+    </div>
+</body>
+</html>
