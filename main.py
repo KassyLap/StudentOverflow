@@ -11,17 +11,29 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # Cambia esto por algo seguro
 
 @app.route("/home")
 def homepage():
     username = session.get("username")
-    questions_result = supabase.table("questions").select("question,subject,period,user_id").execute()
+    questions_result = supabase.table("questions").select("id,question,subject,period,user_id").execute()
     questions = questions_result.data if questions_result.data else []
     users_result = supabase.table("users").select("id,username").execute()
     users = {u["id"]: u["username"] for u in users_result.data} if users_result.data else {}
+
+    comments_result = supabase.table("comments").select("question_id,comment,user_id").execute()
+    comments = comments_result.data if comments_result.data else []
+
+    comments_by_question = {}
+    for c in comments:
+        comments_by_question.setdefault(c["question_id"], []).append({
+            "author": users.get(c["user_id"], "Unknown"),
+            "comment": c["comment"]
+        })
+
     for q in questions:
         q["author"] = users.get(q["user_id"], "Unknown")
+        q["comments"] = comments_by_question.get(q["id"], [])
+
     return render_template('HomePage.html', username=username, questions=questions) 
 
 @app.route("/login")
@@ -90,6 +102,26 @@ def ask():
     }).execute()
 
     return redirect("/home")
+
+@app.route("/comment", methods=["POST"])
+def comment():
+    question_id = request.form.get("question_id")
+    comment_text = request.form.get("comment")
+    username = session.get("username")
+
+    user_result = supabase.table("users").select("id").eq("username", username).execute()
+    if not user_result.data or len(user_result.data) == 0:
+        return jsonify({"error": "User not found"}), 400
+
+    user_id = user_result.data[0]["id"]
+
+    response = supabase.table("comments").insert({
+        "user_id": user_id,
+        "question_id": question_id,
+        "comment": comment_text
+    }).execute()
+
+    return jsonify({"status": "ok", "data": response.data})
 
 if __name__ == "__main__":
     app.run(debug=True)

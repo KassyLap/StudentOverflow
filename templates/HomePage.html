@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudentOverFlow - Home</title>
     <link rel="stylesheet" href="static/style.css" />
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/mortarboard-fill.svg" type="image/svg+xml">
 </head>
 <body>
     <div>
@@ -43,59 +44,54 @@
     <h2>Questions of the community</h2>
     <div id="questionsList">
       {% for q in questions %}
-      <div class="question">
-        <strong>{{ q.author }} asks:</strong>
-        <p>{{ q.question }}</p>
-        <p><em>Subject:</em> {{ q.subject }} | <em>Period:</em> {{ q.period }}</p>
-      </div>
+        <div class="question">
+          <strong>{{ q.author }} asks:</strong>
+          <p>{{ q.question }}</p>
+          <p><em>Subject:</em> {{ q.subject }} | <em>Period:</em> {{ q.period }}</p>
+          {% if q.comments %}
+            <div class="comments">
+              <h4>Comments:</h4>
+              {% for c in q.comments %}
+                <div class="comment">
+                  <strong>{{ c.author }}:</strong> {{ c.comment }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <form class="commentForm" data-question-id="{{ q.id }}">
+            <input type="text" name="comment" placeholder="Add a comment..." required>
+            <button type="submit">Comment</button>
+          </form>
+        </div>
       {% endfor %}
     </div>
   </div>
     </div>
       <script>
-const form = document.getElementById("questionForm");
-const questionsList = document.getElementById("questionsList");
+      document.querySelectorAll('.commentForm').forEach(form => {
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const question_id = form.getAttribute('data-question-id');
+          const comment = form.querySelector('input[name="comment"]').value;
 
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
+          const res = await fetch("/comment", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              question_id: question_id,
+              comment: comment
+            })
+          });
 
-  const username = document.getElementById("username").value;
-  const questionText = document.getElementById("questionText").value;
-
-  // Contenedor de la pregunta
-  const questionDiv = document.createElement("div");
-  questionDiv.classList.add("question");
-  questionDiv.innerHTML = `<strong>${username} asks:</strong><p>${questionText}</p>`;
-
-  // Formulario de comentario
-  const commentForm = document.createElement("form");
-  commentForm.innerHTML = `
-    <input type="text" placeholder="Your name" required>
-    <input type="text" placeholder="Add a comment..." required>
-    <button type="submit">Comment</button>
-  `;
-
-  // Lista de comentarios
-  const commentsDiv = document.createElement("div");
-
-  commentForm.addEventListener("submit", function(ev) {
-    ev.preventDefault();
-    const inputs = commentForm.querySelectorAll("input");
-    const commentUser = inputs[0].value;
-    const commentText = inputs[1].value;
-    const comment = document.createElement("div");
-    comment.innerHTML = `<strong>${commentUser}:</strong> ${commentText}`;
-    commentsDiv.appendChild(comment);
-    commentForm.reset();
-  });
-
-  questionDiv.appendChild(commentForm);
-  questionDiv.appendChild(commentsDiv);
-
-  questionsList.prepend(questionDiv);
-
-  form.reset();
-});
+          if (res.ok) {
+            alert("Comentario enviado!");
+            form.reset();
+            location.reload();
+          } else {
+            alert("Error al enviar el comentario.");
+          }
+        });
+      });
   </script>
     </div>
 </body>
