@@ -1,7 +1,7 @@
 # StudentOverflow 🎓
 
 StudentOverflow es un proyecto tipo foro/preguntas-respuestas inspirado en plataformas como StackOverflow, pensado para estudiantes de Hybridge.
-La aplicación utiliza **Flask** como backend, conexión con **Supabase** como base de datos, y soporta registro/login de usuarios, asi como almacena todos los datos del usuario, ya sea admin o estudiante, los cuales son el nombre, correo, contraseña y el rol, asi como todas las preguntas que ha hecho o comentarios que ha agregado en la plataforma.
+La aplicación utiliza **Flask** como backend, conexión con **Supabase** como base de datos, y soporta registro/login de usuarios, asi como almacena todos los datos del usuario, ya sea admin o estudiante, los cuales son el nombre, correo, contraseña y el rol, asi como todas las preguntas que ha hecho o comentarios que ha agregado recientemente en la plataforma.
 
 ---
 
@@ -15,5 +15,22 @@ La aplicación utiliza **Flask** como backend, conexión con **Supabase** como b
 
 ---
 
-## ⚙️ Instalación
+## ⚙️ Creación del entorno virtual de Python
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # En Linux/Mac
+.venv\Scripts\activate      # En Windows
+```
+
+---
+
+### 💻 Instalación de dependencias
+```bash
+pip install -r requirements.txt
+```
+
+
+
+
 
